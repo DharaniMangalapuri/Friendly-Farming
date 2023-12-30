@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styling6.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beginner</title>
+    <style>
+        Body {  
+      font-family: Calibri, Helvetica, sans-serif;  
+      background: url("begin.jpg") no-repeat;  
+      background-size: cover;
+    }   
+    button {   
+           background-color:rgb(52, 179, 177); 
+           width: 20%;  
+            color: rgb(13, 12, 12);   
+            padding: 15px;   
+            margin: 10px 0px;   
+            border: none;   
+            cursor: pointer;   
+            font-size: 20px;
+             }   
+     input[type=text], input[type=password] {   
+            width: 30%;   
+            margin: 8px 0;  
+            padding: 10px 10px;   
+            display: inline-block;   
+            border: 2px rgb(221, 73, 9);   
+            box-sizing: border-box;   
+        }  
+     button:hover {   
+            opacity: 0.7;   
+        }   
+      .cancelbtn {   
+            width: auto;   
+            padding: 10px 18px;  
+            margin: 10px 5px;  
+        }   
+    </style>
+</head>
+<body>
+    <center><h1>Crop Suggestion</h1></center>
+    <form id="cropForm">
+        <div class="container"> 
+                <div class="d-flex flex-col">
+                    <div class="card">
+                        <center><label for="soilType">Select Soil Type:</label></center>
+                        <center>
+                            <select id="soilType" name="soilType">
+                                <option value="red">Red Soil</option>
+                                <option value="black">Black Soil</option>
+                                <option value="alluvial">Alluvial Soil</option>
+                            </select>
+                        </center><br><br>
+                    </div>
+                    <div class="card">
+                        <center><label for="waterLevel">Select Water Level:</label></center>
+                        <center>
+                            <select id="waterLevel" name="waterLevel">
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </center><br><br>
+                    </div>
+                    <div class="card">
+                        <center><label for="season">Select Season:</label></center>
+                        <center>
+                            <select id="season" name="season">
+                                <option value="summer">Summer</option>
+                                <option value="winter">Winter</option>
+                                <option value="rainy">Rainy</option>
+                            </select>
+                        </center><br><br>
+                    </div>
+                </div>  
+            </div>   
+              <center><button type="button" onclick="suggestCrop()">Suggest Crop</button></center>
+    </form>
+    <p class="suggestedCrop"><strong>Suggested Crop:</strong> <span id="suggestedCrop"></span></p>
+
+    <script>
+        function suggestCrop() {
+            var soilType = document.getElementById("soilType").value;
+                var waterLevel = document.getElementById("waterLevel").value;
+                var season = document.getElementById("season").value;
+                
+                var suggestedCrops = {
+                    "red-medium-summer": ["Tomatoes", "Brinjal", "Chillies","Rice","Turmeric","Ginger","Banana","Betel leaves"],
+                    "red-medium-rainy": ["Rice","Maize","Turmeric","Ginger","Cardaman"],
+                    "red-medium-winter": ["Mustard","Spinach","Fenugreek","peas"],
+                    "red-low-summer": ["Bajra","Jowar","Green gram","cowpea"],
+                    "red-low-winter": ["Mustard","Methi","Radish","Spinach","Carrot","Lettuce"],
+                    "red-low-rainy": ["lentils","GreenGram","Bajra","Cowpea","Ragi","Jowar","Korra"],
+                    "red-high-summer": ["Tomato","Brinjal","Bell pepper","Watermelan","Cucumber","lady's Finger","Pumpkin"],
+                    "red-high-winter": ["Spinach","Cabbage","Carrot","Cauliflower","Radish","peas","beets"],
+                    "red-high-rainy": ["Rice","SugarCane","Turmeric","Watermelan","Banana","Papaya","Ginger"],
+                    "black-high-summer": ["Cotton","Sugarcane","Bajra","Jowar"],
+                    "black-high-winter": ["Mustard","Wheat","Coriander","Methi"],
+                    "black-high-rainy": ["Rice", "Black Gram", "Groundnut"],
+                    "black-low-summer": ["Radish","Spinach","Coroder","Methi"],
+                    "black-low-winter": ["Carrot","Radish","Beets","turnips"],
+                    "black-low-rainy": ["Radish","Spinach","Methi"],
+                    "black-medium-summer": ["Radish","Spinach","Methi"],
+                    "black-medium-winter": ["Carrot","Radish","Beets","turnips"],
+                    "black-medium-rainy": ["Radish","Spinach","Methi"],
+                    "alluvial-low-winter": ["Wheat", "Mustard", "Spinach"],
+                    "alluvial-low-summer": ["Bajra","Jowar","Ragi","Black gram"],
+                    "alluvial-low-rainy": ["Carrot","coriander","Spinach"],
+                    "alluvial-medium-winter": ["Wheat", "Mustard", "Spinach"],
+                    "alluvial-medium-summer": ["Bajra","Jowar","Ragi","Black gram"],
+                    "alluvial-medium-rainy": ["Carrot","coriander","Spinach"],
+                    "alluvial-high-winter": ["Wheat", "Mustard", "Spinach","Radish","Carrot"],
+                    "alluvial-high-summer": ["Bajra","Jowar","Ragi","Black gram","Rice","Sugarcane"],
+                    "alluvial-high-rainy": ["Carrot","coriander","Spinach","Banana","Rice"],
+                };
+            
+                var categoryKey = `${soilType}-${waterLevel}-${season}`;
+                var suggestedCropList = suggestedCrops[categoryKey] || ["No suggestion available"];
+            
+                document.getElementById("suggestedCrop").textContent = suggestedCropList.join(", ");
+        }
+    </script>
+
+    <a href="card.html"><button class="btn btn-primary button">Back</button></a>
+    
+    <!-- Bootstrap JS should be at the end of the body for better performance -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBn+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
+
